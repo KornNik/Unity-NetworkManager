@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5529005246193593441}
+  - component: {fileID: 114944241589496436}
+  - component: {fileID: 5916007930539642833}
   - component: {fileID: 7978698781562134018}
   - component: {fileID: 5709457443245734953}
-  - component: {fileID: 5916007930539642833}
   - component: {fileID: 8875603472985567085}
   m_Layer: 0
   m_Name: Sword_One
@@ -35,6 +36,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114944241589496436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3301104001949766016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb50ef0364b15d4f9d5bee20cfec321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _visRange: 35
+  _visUpdateInterval: 1
+  _visMask:
+    serializedVersion: 2
+    m_Bits: 1024
+--- !u!114 &5916007930539642833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3301104001949766016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f50a814d9642c43b84568e06914974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 2
+  InterectionTransform: {fileID: 5529005246193593441}
+  Item: {fileID: 11400000, guid: 9160b222aca1b3542ba127266370bd1b, type: 2}
+  LifeTime: 20
 --- !u!114 &7978698781562134018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,22 +124,6 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &5916007930539642833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3301104001949766016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92f50a814d9642c43b84568e06914974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InterectionTransform: {fileID: 5529005246193593441}
-  Radius: 2
-  Item: {fileID: 11400000, guid: 9160b222aca1b3542ba127266370bd1b, type: 2}
-  LifeTime: 20
 --- !u!65 &8875603472985567085
 BoxCollider:
   m_ObjectHideFlags: 0

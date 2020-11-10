@@ -11,10 +11,24 @@ public class Player : MonoBehaviour
     [SerializeField] private StatsManager _statsManager;
     [SerializeField] private PlayerProgress _progress;
 
+    private NetworkConnection _conn;
+
     public Character Character { get { return _character; } }
     public Inventory Inventory { get { return _inventory; } }
     public Equipment Equipment { get { return _equipment; } }
     public PlayerProgress Progress { get { return _progress; } }
+    public NetworkConnection Conn
+    {
+        get
+        {
+            if (_conn == null)
+            {
+                _conn = GetComponent<NetworkIdentity>().connectionToClient;
+            }
+            return _conn;
+        }
+    }
+
 
     public void Setup(Character character, Inventory inventory, Equipment equipment, bool isLocalPlayer)
     {

@@ -8,6 +8,7 @@ public class Unit : Interactable
 
     protected Interactable _focus;
     protected bool _isDead;
+    protected float _interactDistance;
 
     public delegate void UnitDelegate();
     public event UnitDelegate EventOnDamage;
@@ -20,6 +21,11 @@ public class Unit : Interactable
     {
         _motor.SetMoveSpeed(_unitStats.MoveSpeed.GetValue());
         _unitStats.MoveSpeed.OnStatChanged += _motor.SetMoveSpeed;
+    }
+    public override float GetInteractDistance(GameObject user)
+    {
+        Combat combat = user.GetComponent<Combat>();
+        return base.GetInteractDistance(user) + (combat != null ? combat.AttackDistance : 0f);
     }
 
     private void Update()
@@ -45,10 +51,11 @@ public class Unit : Interactable
 
     protected virtual void SetFocus(Interactable newFocus)
     {
-        if(newFocus!=_focus)
+        if (newFocus != _focus)
         {
             _focus = newFocus;
-            _motor.FollowTarget(newFocus);
+            _interactDistance = _focus.GetInteractDistance(gameObject);
+            _motor.FollowTarget(newFocus, _interactDistance);
         }
     }
 

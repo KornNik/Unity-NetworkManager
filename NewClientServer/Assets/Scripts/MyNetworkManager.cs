@@ -8,8 +8,10 @@ using UnityEngine.Networking.NetworkSystem;
 public class MyNetworkManager : NetworkManager
 {
 
+    public Action<NetworkClient> clientRegisterHandler;
     public Action<string> loginResponse;
     public Action<string> registerResponse;
+    public Action serverRegisterHandler;
 
     public bool ServerMode;
     private UserDataRepository _repository;
@@ -21,8 +23,12 @@ public class MyNetworkManager : NetworkManager
             _repository = UserDataRepository.Instance;
             NetworkServer.UnregisterHandler(MsgType.Connect);
             NetworkServer.RegisterHandler(MsgType.Connect, OnServerConnectCustom);
-            NetworkServer.RegisterHandler(MsgType.Highest + (short)NetMsgType.Login, OnServerLogin);
-            NetworkServer.RegisterHandler(MsgType.Highest + (short)NetMsgType.Register, OnServerRegister);
+            NetworkServer.RegisterHandler(MsgType.Highest + 1 + (short)NetMsgType.Login, OnServerLogin);
+            NetworkServer.RegisterHandler(MsgType.Highest + 1 + (short)NetMsgType.Register, OnServerRegister);
+            if (serverRegisterHandler != null)
+            {
+                serverRegisterHandler.Invoke();
+            }
         }
     }
 
@@ -53,6 +59,23 @@ public class MyNetworkManager : NetworkManager
         OnServerConnect(netMsg.conn);
     }
 
+    public void Login(string login, string pass)
+    {
+        ClientConnect();
+        StartCoroutine(SendLogin(login, pass));
+    }
+
+    public void Register(string login, string pass)
+    {
+        ClientConnect();
+        StartCoroutine(SendRegister(login, pass));
+    }
+    public void AccountEnter(UserAccount account)
+    {
+        account.Conn.Send(MsgType.Scene, new StringMessage(onlineScene));
+    }
+
+
     IEnumerator LoginUser(NetworkMessage netMsg)
     {
         UserAccount account = new UserAccount(netMsg.conn);
@@ -66,13 +89,19 @@ public class MyNetworkManager : NetworkManager
 
         if (response == "Success")
         {
-            Debug.Log("server login success");
-            netMsg.conn.Send(MsgType.Scene, new StringMessage(SceneManager.GetActiveScene().name));
+            if (account.Data.CharacterHash.IsValid())
+            {
+                AccountEnter(account);
+            }
+            else
+            {
+                netMsg.conn.Send(MsgType.Highest + 1 + (short)NetMsgType.Login, new StringMessage("CharacterNotSelect"));
+                netMsg.conn.Send(MsgType.Highest + 1 + (short)NetMsgType.SelectCharacter, new EmptyMessage());
+            }
         }
         else
         {
-            Debug.Log("server login fail");
-            netMsg.conn.Send(MsgType.Highest + (short)NetMsgType.Login, new StringMessage(response));
+            netMsg.conn.Send(MsgType.Highest + 1 + (short)NetMsgType.Login, new StringMessage(response));
         }
     }
 
@@ -87,33 +116,21 @@ public class MyNetworkManager : NetworkManager
         string response = e.Current as string;
 
         Debug.Log("server register done");
-        netMsg.conn.Send(MsgType.Highest + (short)NetMsgType.Register, new StringMessage(response));
-    }
-
-    public void Login(string login, string pass)
-    {
-        ClientConnect();
-        StartCoroutine(SendLogin(login, pass));
-    }
-
-    public void Register(string login, string pass)
-    {
-        ClientConnect();
-        StartCoroutine(SendRegister(login, pass));
+        netMsg.conn.Send(MsgType.Highest + 1 + (short)NetMsgType.Register, new StringMessage(response));
     }
 
     IEnumerator SendLogin(string login, string pass)
     {
         while (!client.isConnected) yield return null;
         Debug.Log("client login");
-        client.connection.Send(MsgType.Highest + (short)NetMsgType.Login, new UserMessage(login, pass));
+        client.connection.Send(MsgType.Highest + 1 + (short)NetMsgType.Login, new UserMessage(login, pass));
     }
 
     IEnumerator SendRegister(string login, string pass)
     {
         while (!client.isConnected) yield return null;
         Debug.Log("client register");
-        client.connection.Send(MsgType.Highest + (short)NetMsgType.Register, new UserMessage(login, pass));
+        client.connection.Send(MsgType.Highest + 1 + (short)NetMsgType.Register, new UserMessage(login, pass));
     }
 
     void ClientConnect()
@@ -122,36 +139,12 @@ public class MyNetworkManager : NetworkManager
         if (client == null)
         {
             client = StartClient();
-            client.RegisterHandler(MsgType.Highest + (short)NetMsgType.Login, OnClientLogin);
-            client.RegisterHandler(MsgType.Highest + (short)NetMsgType.Register, OnClientRegister);
+            client.RegisterHandler(MsgType.Highest + 1 + (short)NetMsgType.Login, OnClientLogin);
+            client.RegisterHandler(MsgType.Highest + 1 + (short)NetMsgType.Register, OnClientRegister);
+            if (clientRegisterHandler != null)
+            {
+                clientRegisterHandler.Invoke(client);
+            }
         }
-    }
-}
-
-public class UserMessage : MessageBase
-{
-    public string login;
-    public string pass;
-
-    public UserMessage()
-    {
-    }
-
-    public UserMessage(string login, string pass)
-    {
-        this.login = login;
-        this.pass = pass;
-    }
-
-    public override void Deserialize(NetworkReader reader)
-    {
-        login = reader.ReadString();
-        pass = reader.ReadString();
-    }
-
-    public override void Serialize(NetworkWriter writer)
-    {
-        writer.Write(login);
-        writer.Write(pass);
     }
 }

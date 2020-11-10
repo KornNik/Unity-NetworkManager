@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2748509053934328450}
   - component: {fileID: 4283103946912607484}
+  - component: {fileID: 114674743064729056}
   - component: {fileID: 5203918319330536684}
   - component: {fileID: 8193177106917751469}
   - component: {fileID: 6287192655909712160}
@@ -47,10 +48,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f50a814d9642c43b84568e06914974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _radius: 2
   InterectionTransform: {fileID: 2748509053934328450}
-  Radius: 2
   Item: {fileID: 11400000, guid: e1526fbec8f89524e9c18ff434277147, type: 2}
   LifeTime: 20
+--- !u!114 &114674743064729056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4008829242427317017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb50ef0364b15d4f9d5bee20cfec321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _visRange: 35
+  _visUpdateInterval: 1
+  _visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &5203918319330536684
 MonoBehaviour:
   m_ObjectHideFlags: 0

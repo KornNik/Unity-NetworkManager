@@ -10,6 +10,8 @@ public class Combat: NetworkBehaviour
     private float _attackCooldown = 0f;
     private UnitStats _unitStats;
 
+    public float AttackDistance = 0f;
+
     public delegate void CombatDelegate();
     [SyncEvent] public event CombatDelegate EventOnAttack;
 

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 114368014608748790}
   - component: {fileID: 114707286428565854}
   - component: {fileID: 114377180003684210}
+  - component: {fileID: 114007220205057224}
   - component: {fileID: 4661915369201684095}
   - component: {fileID: 7361311059438344519}
   - component: {fileID: 5296762713023258214}
@@ -112,8 +113,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07007163c3f2cf4a847255aac7a9d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _radius: 2
   InterectionTransform: {fileID: 6750170525187467837}
-  Radius: 2
   _motor: {fileID: 5348160966614991514}
   _unitStats: {fileID: 114707286428565854}
   _moveRadius: 10
@@ -123,6 +124,7 @@ MonoBehaviour:
   _viewDistance: 5
   _reviveDelay: 15
   _rewardExp: 40
+  _agroDistance: 5
 --- !u!114 &4278155817189057391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackSpeed: 1
+  AttackDistance: 0
 --- !u!114 &114368014608748790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +218,23 @@ MonoBehaviour:
     Rate: 60.1
   - Item: {fileID: 11400000, guid: e1526fbec8f89524e9c18ff434277147, type: 2}
     Rate: 30.1
+--- !u!114 &114007220205057224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916156316053211860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb50ef0364b15d4f9d5bee20cfec321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _visRange: 35
+  _visUpdateInterval: 1
+  _visMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &4661915369201684095
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,10 +14,11 @@ public class Enemy : Unit
 
     [Header("Behavioure")]
     [SerializeField] private bool _isAggressive;
-    [SerializeField] private float _viewDistance;
+    [SerializeField] private float _viewDistance = 8f;
     [SerializeField] private float _reviveDelay;
-
     [SerializeField] private float _rewardExp;
+    [SerializeField] private float _agroDistance = 5f;
+
 
     private float _reviveTime;
 
@@ -61,7 +62,7 @@ public class Enemy : Unit
         {
             float distance = Vector3.Distance(_focus.InterectionTransform.position, transform.position);
             if (distance > _viewDistance || !_focus.HasInteracte) { RemoveFocus(); }
-            else if (distance <= _focus.Radius)
+            else if (distance <= _interactDistance)
             {
                 if (!_focus.Interact(gameObject)) { RemoveFocus(); }
             }
@@ -114,7 +115,7 @@ public class Enemy : Unit
 
     private void FindEnemy()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _viewDistance,
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _agroDistance,
             1 << LayerMask.NameToLayer("Player"));
         for (int i = 0; i < colliders.Length; i++)
         {
