@@ -1,0 +1,85 @@
+﻿using UnityEngine;
+
+[RequireComponent(typeof(UnitMotor), typeof(PlayerStats))]
+public class Character : Unit
+{
+    [SerializeField] private float _reviveDelay = 5f;
+
+    private Vector3 _startPosition;
+    private Vector3 _respawnPosition;
+    private float _reviveTime;
+
+    public Player Player;
+
+    public PlayerStats PlayerStats { get { return base.UnitStats as PlayerStats; } }
+
+    private void Start()
+    {
+        _startPosition = transform.position;
+        _reviveTime = _reviveDelay;
+        if (PlayerStats.CurrHealth == 0)
+        {
+            transform.position = _startPosition;
+            if (isServer)
+            {
+                PlayerStats.SetHealthRate(1);
+                Motor.MoveToPoint(_startPosition);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        OnUpdate();
+    }
+
+    protected override void OnDeadUpdate()
+    {
+        base.OnDeadUpdate();
+        if (_reviveTime > 0) { _reviveTime -= Time.deltaTime; }
+        else { _reviveTime = _reviveDelay; Revive(); }
+    }
+
+    protected override void OnAliveUpdate()
+    {
+        base.OnAliveUpdate();
+        if (_focus != null)
+        {
+            if (!_focus.HasInteract) { RemoveFocus(); }
+            else
+            {
+                float distance = Vector3.Distance(_focus.InterectionTransform.position, transform.position);
+                if (distance <= _interactDistance) { if (!_focus.Interact(gameObject)) { RemoveFocus(); } }
+            }
+        }
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+    }
+
+    protected override void Revive()
+    {
+        base.Revive();
+        transform.position = _respawnPosition;
+        if (isServer) { Motor.MoveToPoint(_respawnPosition); }
+    }
+
+    public void SetMovePoint(Vector3 point)
+    {
+        if (!_isDead) { RemoveFocus(); Motor.MoveToPoint(point); }
+    }
+
+    public void SetNewFocus(Interactable newFocus)
+    {
+        if (!_isDead)
+        {
+            if (newFocus.HasInteract) { SetFocus(newFocus); }
+        }
+    }
+    public void SetRespawnPosition(Vector3 newPosition)
+    {
+        _respawnPosition = newPosition;
+    }
+}
