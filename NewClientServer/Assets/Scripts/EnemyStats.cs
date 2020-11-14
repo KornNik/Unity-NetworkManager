@@ -4,7 +4,7 @@ class EnemyStats : UnitStats
 {
     public override void OnStartServer()
     {
-        currHealth = _maxHealth;
+        CurrHealth = _maxHealth;
     }
 
 }

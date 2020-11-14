@@ -104,6 +104,13 @@
     <Compile Include="Assets\Scripts\SaveData\JsonData.cs" />
     <Compile Include="Assets\Scripts\SaveData\SerializableUserObject.cs" />
     <Compile Include="Assets\Scripts\SaveData\UserDataRepository.cs" />
+    <Compile Include="Assets\Scripts\Skills\Skill.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillPanelItem.cs" />
+    <Compile Include="Assets\Scripts\Skills\SkillsPanel.cs" />
+    <Compile Include="Assets\Scripts\Skills\SwordsmanSkills\AuraStrikeSkill.cs" />
+    <Compile Include="Assets\Scripts\Skills\SwordsmanSkills\FrontWarpSkill.cs" />
+    <Compile Include="Assets\Scripts\Skills\SwordsmanSkills\HealSkill.cs" />
+    <Compile Include="Assets\Scripts\Skills\UnitSkills.cs" />
     <Compile Include="Assets\Scripts\Stat.cs" />
     <Compile Include="Assets\Scripts\Stats\StatItem.cs" />
     <Compile Include="Assets\Scripts\Stats\StatsManager.cs" />

@@ -42,7 +42,7 @@ public class InventoryUI : MonoBehaviour
         _inventory = newInventory;
         _inventory.OnItemChanged += ItemChanged;
         InventorySlot[] childs = _itemsParent.GetComponentsInChildren<InventorySlot>();
-        for (int i = 0; i < childs.Length; i++) Destroy(childs[i].gameObject);
+        for (int i = 0; i < childs.Length; i++) { Destroy(childs[i].gameObject); }
         _slots = new InventorySlot[_inventory.Space];
         for (int i = 0; i < _inventory.Space; i++)
         {
@@ -57,8 +57,8 @@ public class InventoryUI : MonoBehaviour
     {
         for (int i = 0; i < _slots.Length; i++)
         {
-            if (i < _inventory.Items.Count) _slots[i].SetItem(_inventory.Items[i]);
-            else _slots[i].ClearSlot();
+            if (i < _inventory.Items.Count) { _slots[i].SetItem(_inventory.Items[i]); }
+            else { _slots[i].ClearSlot(); }
         }
     }
 }

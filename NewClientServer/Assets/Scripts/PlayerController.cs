@@ -45,6 +45,12 @@ public class PlayerController : NetworkBehaviour
                         }
                     }
                 }
+
+                if (Input.GetButtonDown("Skill1")) { CmdUseSkill(0); }
+
+                if (Input.GetButtonDown("Skill2")) { CmdUseSkill(1); }
+
+                if (Input.GetButtonDown("Skill3")) { CmdUseSkill(2); }
             }
         }
     }
@@ -52,18 +58,29 @@ public class PlayerController : NetworkBehaviour
     public void SetCharacter(Character character, bool isLocalPlayer)
     {
         _character = character;
-        if (isLocalPlayer) { _camera.GetComponent<CameraController>().target = character.transform; }
+        if (isLocalPlayer)
+        {
+            _camera.GetComponent<CameraController>().target = character.transform;
+            SkillsPanel.Instance.SetSkills(character.UnitSkills);
+        }
     }
 
     [Command]
-    public void CmdSetMovePoint(Vector3 point)
+    void CmdSetMovePoint(Vector3 point)
     {
-        _character.SetMovePoint(point);
+        if (!_character.UnitSkills.InCast) _character.SetMovePoint(point);
     }
 
     [Command]
-    public void CmdSetFocus(NetworkIdentity newFocus)
+    void CmdSetFocus(NetworkIdentity newFocus)
     {
-        _character.SetNewFocus(newFocus.GetComponent<Interactable>());
+        if (!_character.UnitSkills.InCast)
+            _character.SetNewFocus(newFocus.GetComponent<Interactable>());
+    }
+
+    [Command]
+    void CmdUseSkill(int skillNum)
+    {
+        if (!_character.UnitSkills.InCast) _character.UseSkill(skillNum);
     }
 }

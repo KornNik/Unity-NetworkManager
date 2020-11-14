@@ -83,8 +83,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81491ae1dc5f9fa42bd79a04b32112fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitPrefab: {fileID: 8684329997346445824, guid: 861800bb76450af4d9dac802fbe3b0b3,
-    type: 3}
   _controller: {fileID: 114508426267049138}
   _player: {fileID: 114965805938972782}
 --- !u!114 &114508426267049138
@@ -115,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Space: 8
-  Player: {fileID: 114965805938972782}
+  Player: {fileID: 0}
 --- !u!114 &114974380670558524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1887a3cc4036e164289ed2f7e22a2ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 114965805938972782}
+  Player: {fileID: 0}
 --- !u!114 &114965805938972782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,12 +139,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a374016aeb5a1141b1df2187b464985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _character: {fileID: 8684329997346445827, guid: 861800bb76450af4d9dac802fbe3b0b3,
-    type: 3}
-  _inventory: {fileID: 114010791629636174}
-  _equipment: {fileID: 114974380670558524}
-  _statsManager: {fileID: 114265489254380178}
-  _progress: {fileID: 7549133716996969643}
+  _character: {fileID: 0}
+  _inventory: {fileID: 0}
+  _equipment: {fileID: 0}
+  _statsManager: {fileID: 0}
+  _progress: {fileID: 0}
 --- !u!114 &114265489254380178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +163,7 @@ MonoBehaviour:
   StatPoints: 0
   Exp: 0
   NextLevelExp: 0
-  Player: {fileID: 114965805938972782}
+  Player: {fileID: 0}
 --- !u!114 &7549133716996969643
 MonoBehaviour:
   m_ObjectHideFlags: 0

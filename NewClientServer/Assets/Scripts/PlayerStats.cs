@@ -5,13 +5,13 @@ public class PlayerStats : UnitStats
     private StatsManager _statsManager;
     private UserData _data;
 
-    public override int currHealth
+    public override int CurrHealth
     {
-        get { return base.currHealth; }
+        get { return base.CurrHealth; }
         protected set
         {
-            base.currHealth = value;
-            _data.CurHealth = currHealth;
+            base.CurrHealth = value;
+            _data.CurHealth = CurrHealth;
         }
     }
 
@@ -29,7 +29,7 @@ public class PlayerStats : UnitStats
     public void Load(UserData data)
     {
         _data = data;
-        currHealth = _data.CurHealth;
+        CurrHealth = _data.CurHealth;
         if (_data.StatDamage > 0)
         {
             Damage.baseValue = _data.StatDamage;

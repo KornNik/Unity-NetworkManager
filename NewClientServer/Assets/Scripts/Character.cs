@@ -11,19 +11,19 @@ public class Character : Unit
 
     public Player Player;
 
-    public PlayerStats PlayerStats { get { return _unitStats as PlayerStats; } }
+    public PlayerStats PlayerStats { get { return base.UnitStats as PlayerStats; } }
 
     private void Start()
     {
         _startPosition = transform.position;
         _reviveTime = _reviveDelay;
-        if (PlayerStats.currHealth == 0)
+        if (PlayerStats.CurrHealth == 0)
         {
             transform.position = _startPosition;
             if (isServer)
             {
                 PlayerStats.SetHealthRate(1);
-                _motor.MoveToPoint(_startPosition);
+                Motor.MoveToPoint(_startPosition);
             }
         }
     }
@@ -45,7 +45,7 @@ public class Character : Unit
         base.OnAliveUpdate();
         if (_focus != null)
         {
-            if (!_focus.HasInteracte) { RemoveFocus(); }
+            if (!_focus.HasInteract) { RemoveFocus(); }
             else
             {
                 float distance = Vector3.Distance(_focus.InterectionTransform.position, transform.position);
@@ -63,19 +63,19 @@ public class Character : Unit
     {
         base.Revive();
         transform.position = _respawnPosition;
-        if (isServer) { _motor.MoveToPoint(_respawnPosition); }
+        if (isServer) { Motor.MoveToPoint(_respawnPosition); }
     }
 
     public void SetMovePoint(Vector3 point)
     {
-        if (!_isDead) { RemoveFocus(); _motor.MoveToPoint(point); }
+        if (!_isDead) { RemoveFocus(); Motor.MoveToPoint(point); }
     }
 
     public void SetNewFocus(Interactable newFocus)
     {
         if (!_isDead)
         {
-            if (newFocus.HasInteracte) { SetFocus(newFocus); }
+            if (newFocus.HasInteract) { SetFocus(newFocus); }
         }
     }
     public void SetRespawnPosition(Vector3 newPosition)

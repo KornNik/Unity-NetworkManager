@@ -1,21 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using System;
 
 public class Unit : Interactable
 {
-    [SerializeField] protected UnitMotor _motor;
-    [SerializeField] protected UnitStats _unitStats;
+    [SerializeField] private UnitMotor _motor;
+    [SerializeField] private UnitStats _unitStats;
 
     protected Interactable _focus;
     protected bool _isDead;
     protected float _interactDistance;
 
-    public delegate void UnitDelegate();
-    public event UnitDelegate EventOnDamage;
-    public event UnitDelegate EventOnDie;
-    public event UnitDelegate EventOnRevive;
+    public event Action EventOnDamage;
+    public event Action EventOnDie;
+    public event Action EventOnRevive;
+
+    public UnitSkills UnitSkills;
 
     public UnitStats UnitStats { get { return _unitStats; } }
+    public UnitMotor Motor { get { return _motor; } }
+    public Interactable Focus { get { return _focus; } }
 
     public override void OnStartServer()
     {
@@ -42,14 +46,14 @@ public class Unit : Interactable
         {
             if (!_isDead)
             {
-                if(_unitStats.currHealth == 0) { Die(); }
+                if(_unitStats.CurrHealth == 0) { Die(); }
                 else { OnAliveUpdate(); }
             }
             else { OnDeadUpdate(); }
         }
     }
 
-    protected virtual void SetFocus(Interactable newFocus)
+    public virtual void SetFocus(Interactable newFocus)
     {
         if (newFocus != _focus)
         {
@@ -59,7 +63,7 @@ public class Unit : Interactable
         }
     }
 
-    protected virtual void RemoveFocus()
+    public virtual void RemoveFocus()
     {
         _focus = null;
         _motor.StopFollowingTarget();
@@ -80,6 +84,21 @@ public class Unit : Interactable
         return base.Interact(user);
     }
 
+    public void UseSkill(int skillNum)
+    {
+        if (!_isDead && skillNum < UnitSkills.Count)
+        {
+            UnitSkills[skillNum].Use(this);
+        }
+    }
+
+    public void TakeDamage(GameObject user, int damage)
+    {
+        _unitStats.TakeDamage(damage);
+        DamageWithCombat(user);
+    }
+
+
     [ClientCallback]
     protected virtual void Die()
     {
@@ -88,7 +107,7 @@ public class Unit : Interactable
         EventOnDie();
         if (isServer)
         {
-            HasInteracte = false;
+            HasInteract = false;
             RemoveFocus();
             _motor.MoveToPoint(transform.position);
             RpcDie();
@@ -109,7 +128,7 @@ public class Unit : Interactable
         EventOnRevive();
         if (isServer)
         {
-            HasInteracte = true;
+            HasInteract = true;
             _unitStats.SetHealthRate(1);
             RpcRevive();
         }

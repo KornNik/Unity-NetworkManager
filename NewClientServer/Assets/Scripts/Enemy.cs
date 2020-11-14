@@ -38,9 +38,16 @@ public class Enemy : Unit
     protected override void DamageWithCombat(GameObject user)
     {
         base.DamageWithCombat(user);
-        Character character = user.GetComponent<Character>();
-        if (character != null && !_enemies.Contains(character))
-            _enemies.Add(character);
+        Unit enemy = user.GetComponent<Unit>();
+        if (enemy != null)
+        {
+            SetFocus(enemy.GetComponent<Interactable>());
+            Character character = enemy as Character;
+            if (character != null && !_enemies.Contains(character))
+            {
+                _enemies.Add(character);
+            }
+        }
     }
 
     protected override void OnDeadUpdate()
@@ -61,7 +68,7 @@ public class Enemy : Unit
         else
         {
             float distance = Vector3.Distance(_focus.InterectionTransform.position, transform.position);
-            if (distance > _viewDistance || !_focus.HasInteracte) { RemoveFocus(); }
+            if (distance > _viewDistance || !_focus.HasInteract) { RemoveFocus(); }
             else if (distance <= _interactDistance)
             {
                 if (!_focus.Interact(gameObject)) { RemoveFocus(); }
@@ -73,7 +80,7 @@ public class Enemy : Unit
     {
         base.Revive();
         transform.position = _startPosition;
-        if (isServer) { _motor.MoveToPoint(_startPosition); }
+        if (isServer) { Motor.MoveToPoint(_startPosition); }
     }
 
     protected override void Die()
@@ -110,7 +117,7 @@ public class Enemy : Unit
     {
         _currentDistanation = Quaternion.AngleAxis(Random.Range(0f, 360f), 
             Vector3.up) * new Vector3(_moveRadius, 0, 0) + _startPosition;
-        _motor.MoveToPoint(_currentDistanation);
+        Motor.MoveToPoint(_currentDistanation);
     }
 
     private void FindEnemy()
@@ -120,18 +127,7 @@ public class Enemy : Unit
         for (int i = 0; i < colliders.Length; i++)
         {
             Interactable interactable = colliders[i].GetComponent<Interactable>();
-            if (interactable != null && interactable.HasInteracte) { SetFocus(interactable); break; }
+            if (interactable != null && interactable.HasInteract) { SetFocus(interactable); break; }
         }
     }
-
-    public override bool Interact(GameObject user)
-    {
-        if (base.Interact(user))
-        {
-            SetFocus(user.GetComponent<Interactable>());
-            return true;
-        }
-        return false;
-    }
-
 }
