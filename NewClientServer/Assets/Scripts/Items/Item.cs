@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
-public class Item : ScriptableObject 
+[CreateAssetMenu (fileName ="New Item", menuName = "Inventory/Item")]
+public class Item : ScriptableObject
 {
-
     new public string name = "New Item";
-    public Sprite Icon = null;
-    public ItemPickup PickupPrefab;
+    public Sprite icon = null;
+    public PickUpItem pickUpPrefab;
 
-    public virtual void Use(Player player) 
+    public virtual void Use(Player player)
     {
         Debug.Log("Using " + name);
     }

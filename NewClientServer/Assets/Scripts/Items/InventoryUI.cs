@@ -1,19 +1,22 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
 
     #region Singleton
-    public static InventoryUI instance;
+    public static InventoryUI Instance;
 
     private void Awake()
     {
-        if (instance != null)
+        _inventoryUI.SetActive(false);
+        if (Instance != null)
         {
             Debug.LogError("More than one instance of InventoryUI found!");
             return;
         }
-        instance = this;
+        Instance = this;
     }
     #endregion
 
@@ -23,12 +26,6 @@ public class InventoryUI : MonoBehaviour
 
     private InventorySlot[] _slots;
     private Inventory _inventory;
-
-    private void Start()
-    {
-        _inventoryUI.SetActive(false);
-    }
-
     private void Update()
     {
         if (Input.GetButtonDown("Inventory"))
@@ -36,29 +33,39 @@ public class InventoryUI : MonoBehaviour
             _inventoryUI.SetActive(!_inventoryUI.activeSelf);
         }
     }
-
     public void SetInventory(Inventory newInventory)
     {
         _inventory = newInventory;
         _inventory.OnItemChanged += ItemChanged;
         InventorySlot[] childs = _itemsParent.GetComponentsInChildren<InventorySlot>();
-        for (int i = 0; i < childs.Length; i++) { Destroy(childs[i].gameObject); }
+        for (int i = 0; i < childs.Length; i++) 
+        { 
+            Destroy(childs[i].gameObject); 
+        }
         _slots = new InventorySlot[_inventory.Space];
         for (int i = 0; i < _inventory.Space; i++)
         {
             _slots[i] = Instantiate(_slotPrefab, _itemsParent);
             _slots[i].Inventory = _inventory;
-            if (i < _inventory.Items.Count) _slots[i].SetItem(_inventory.Items[i]);
+            if (i < _inventory.Items.Count)
+            {
+                _slots[i].SetItem(_inventory.Items[i]);
+            }
             else _slots[i].ClearSlot();
         }
     }
-
     private void ItemChanged(UnityEngine.Networking.SyncList<Item>.Operation op, int itemIndex)
     {
         for (int i = 0; i < _slots.Length; i++)
         {
-            if (i < _inventory.Items.Count) { _slots[i].SetItem(_inventory.Items[i]); }
-            else { _slots[i].ClearSlot(); }
+            if (i < _inventory.Items.Count)
+            {
+                _slots[i].SetItem(_inventory.Items[i]);
+            }
+            else
+            {
+                _slots[i].ClearSlot();
+            }
         }
     }
 }

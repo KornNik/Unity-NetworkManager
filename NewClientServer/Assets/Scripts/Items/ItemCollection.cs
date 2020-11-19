@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Item Collection", menuName = "Inventory/Item Collection")]
+[CreateAssetMenu (fileName = "New Item Collection", menuName = "Inventory/Item collection")]
 public class ItemCollection : ScriptableObject
 {
-
-    public Item[] Items = new Item[0];
+    public Item[] items = new Item[0];
 }

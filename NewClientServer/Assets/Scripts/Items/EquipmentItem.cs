@@ -3,12 +3,11 @@
 [CreateAssetMenu(fileName = "New equipment", menuName = "Inventory/Equipment")]
 public class EquipmentItem : Item
 {
+    public EquipmentSlotType equipSlot;
 
-    public EquipmentSlotType EquipSlot;
-
-    public int DamageModifier;
-    public int ArmorModifier;
-    public int SpeedModifier;
+    public int damageModifier;
+    public int armorModifier;
+    public int speedModifier;
 
     public override void Use(Player player)
     {
@@ -17,15 +16,14 @@ public class EquipmentItem : Item
         if (oldItem != null) player.Inventory.AddItem(oldItem);
         base.Use(player);
     }
-
     public virtual void Equip(Player player)
     {
         if (player != null)
         {
-            UnitStats unitStats = player.Character.UnitStats;
-            unitStats.Damage.AddModifier(DamageModifier);
-            unitStats.Armor.AddModifier(ArmorModifier);
-            unitStats.MoveSpeed.AddModifier(SpeedModifier);
+            UnitStats stats = player.Character.Stats;
+            stats.Damage.AddModifier(damageModifier);
+            stats.Armor.AddModifier(armorModifier);
+            stats.MoveSpeed.AddModifier(speedModifier);
         }
     }
 
@@ -33,10 +31,10 @@ public class EquipmentItem : Item
     {
         if (player != null)
         {
-            UnitStats unitStats = player.Character.UnitStats;
-            unitStats.Damage.RemoveModifier(DamageModifier);
-            unitStats.Armor.RemoveModifier(ArmorModifier);
-            unitStats.MoveSpeed.RemoveModifier(SpeedModifier);
+            UnitStats stats = player.Character.Stats;
+            stats.Damage.RemoveModifier(damageModifier);
+            stats.Armor.RemoveModifier(armorModifier);
+            stats.MoveSpeed.RemoveModifier(speedModifier);
         }
     }
 }

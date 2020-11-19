@@ -2,31 +2,28 @@
 
 public class Equipment : NetworkBehaviour
 {
-    private UserData _data;
-
-    public event SyncList<Item>.SyncListChanged OnItemChanged;
-    public SyncListItem Items = new SyncListItem();
     public Player Player;
+    public event SyncList<Item>.SyncListChanged onItemChanged;
+    public SyncListItem Items = new SyncListItem();
 
-    public void Load(UserData data)
-    {
-        _data = data;
-        for (int i = 0; i < data.Equipment.Count; i++)
-        {
-            EquipmentItem item = (EquipmentItem)ItemBase.GetItem(data.Equipment[i]);
-            Items.Add(item);
-            item.Equip(Player);
-        }
-    }
-
+    private UserData _data;
     public override void OnStartLocalPlayer()
     {
         Items.Callback += ItemChanged;
     }
-
+    public void Load(UserData data)
+    {
+        _data = data;
+        for (int i = 0; i < _data.Equipment.Count; i++)
+        {
+            EquipmentItem item = (EquipmentItem)ItemBase.GetItem(_data.Equipment[i]);
+            Items.Add(item);
+            item.Equip(Player);
+        }
+    }
     private void ItemChanged(SyncList<Item>.Operation op, int itemIndex)
     {
-        OnItemChanged(op, itemIndex);
+        onItemChanged(op, itemIndex);
     }
 
     public EquipmentItem EquipItem(EquipmentItem item)
@@ -34,7 +31,7 @@ public class Equipment : NetworkBehaviour
         EquipmentItem oldItem = null;
         for (int i = 0; i < Items.Count; i++)
         {
-            if (((EquipmentItem)Items[i]).EquipSlot == item.EquipSlot)
+            if (((EquipmentItem)Items[i]).equipSlot == item.equipSlot)
             {
                 oldItem = (EquipmentItem)Items[i];
                 oldItem.Unequip(Player);
@@ -46,9 +43,9 @@ public class Equipment : NetworkBehaviour
         Items.Add(item);
         item.Equip(Player);
         _data.Equipment.Add(ItemBase.GetItemId(item));
+
         return oldItem;
     }
-
     public void UnequipItem(Item item)
     {
         CmdUnequipItem(Items.IndexOf(item));

@@ -3,21 +3,21 @@ using UnityEngine.Networking;
 
 public class NetUnitSetup : NetworkBehaviour
 {
-    [SerializeField] private MonoBehaviour[] _disableBihaviours;
 
-    private void Awake()
+    [SerializeField] private MonoBehaviour[] _disableBehaviours;
+
+    void Awake()
     {
-        for (int i = 0; i < _disableBihaviours.Length; i++)
+        for (int i = 0; i < _disableBehaviours.Length; i++)
         {
-            _disableBihaviours[i].enabled = false;
+            _disableBehaviours[i].enabled = false;
         }
     }
-
     public override void OnStartServer()
     {
-        for (int i = 0; i < _disableBihaviours.Length; i++)
+        for (int i = 0; i < _disableBehaviours.Length; i++)
         {
-            _disableBihaviours[i].enabled = true;
+            _disableBehaviours[i].enabled = true;
         }
     }
 }

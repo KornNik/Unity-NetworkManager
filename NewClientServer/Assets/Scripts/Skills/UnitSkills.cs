@@ -6,6 +6,9 @@ public class UnitSkills
 {
     [SerializeField] private Skill[] _skills;
 
+    private UserData _data;
+
+
     public Skill this[int index]
     {
         get 
@@ -37,6 +40,37 @@ public class UnitSkills
                 }
             }
             return false;
+        }
+    }
+
+    public void Load(UserData data)
+    {
+        _data = data;
+        for (int i = 0; i < _skills.Length; i++)
+        {
+            UpgradeableSkill skill = _skills[i] as UpgradeableSkill;
+            if (i >= data.Skills.Count)
+            {
+                data.Skills.Add(skill.Level);
+            }
+            else
+            {
+                skill.Level = data.Skills[i];
+            }
+
+            skill.OnSetLevel += ChangeLevel;
+        }
+    }
+
+    void ChangeLevel(UpgradeableSkill skill, int newLevel)
+    {
+        for (int i = 0; i < _skills.Length; i++)
+        {
+            if (_skills[i] == skill)
+            {
+                _data.Skills[i] = newLevel;
+                break;
+            }
         }
     }
 }

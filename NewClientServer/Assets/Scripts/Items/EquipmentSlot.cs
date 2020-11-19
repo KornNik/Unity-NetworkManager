@@ -1,29 +1,34 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipmentSlot : MonoBehaviour {
+public class EquipmentSlot : MonoBehaviour
+{
+    public Image icon;
+    public Button unequipButton;
+    public Equipment equipment;
 
-    public Image Icon;
-    public Button UnequipButton;
-    public Equipment Equipment;
+    private Item _item;
 
-    Item item;
-
-    public void SetItem(Item newItem) {
-        item = newItem;
-        Icon.sprite = item.Icon;
-        Icon.enabled = true;
-        UnequipButton.interactable = true;
+    public void SetItem(Item newItem)
+    {
+        _item = newItem;
+        icon.sprite = _item.icon;
+        icon.enabled = true;
+        unequipButton.interactable = true;
     }
 
-    public void ClearSlot() {
-        item = null;
-        Icon.sprite = null;
-        Icon.enabled = false;
-        UnequipButton.interactable = false;
+    public void ClearSlot()
+    {
+        _item = null;
+        icon.sprite = null;
+        icon.enabled = false;
+        unequipButton.interactable = false;
     }
 
-    public void Unequip() {
-        Equipment.UnequipItem(item);
+    public void Unequip()
+    {
+        equipment.UnequipItem(_item);
     }
 }

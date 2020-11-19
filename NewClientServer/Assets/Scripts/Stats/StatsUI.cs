@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class StatsUI : MonoBehaviour
 {
-
     #region Singleton
     public static StatsUI Instance;
 
@@ -17,14 +18,14 @@ public class StatsUI : MonoBehaviour
         Instance = this;
     }
     #endregion
-
     [SerializeField] private GameObject _statsUI;
-    [SerializeField] private StatItem   _damageStat;
-    [SerializeField] private StatItem   _armorStat;
-    [SerializeField] private StatItem   _moveSpeedStat;
-    [SerializeField] private Text _statPointsText;
+    [SerializeField] private StatItem _damageStat;
+    [SerializeField] private StatItem _armorStat;
+    [SerializeField] private StatItem _moveSpeedStat;
     [SerializeField] private Text _levelText;
+    [SerializeField] private Text _statPointsText;
 
+    private StatsManager _manager;
     private int _curDamage;
     private int _curArmor;
     private int _curMoveSpeed;
@@ -32,13 +33,11 @@ public class StatsUI : MonoBehaviour
     private int _curStatPoints;
     private float _curExp;
     private float _nextLevelExp;
-    private StatsManager _manager;
 
     void Start()
     {
         _statsUI.SetActive(false);
     }
-
     void Update()
     {
         if (Input.GetButtonDown("Stats"))
@@ -50,33 +49,14 @@ public class StatsUI : MonoBehaviour
             CheckManagerChanges();
         }
     }
-
     public void SetManager(StatsManager statsManager)
     {
         _manager = statsManager;
         CheckManagerChanges();
     }
-
-    public void UpgradeStat(StatItem stat)
-    {
-        if (stat == _damageStat)
-            _manager.CmdUpgradeStat((int)StatType.Damage);
-        else if (stat == _armorStat)
-            _manager.CmdUpgradeStat((int)StatType.Armor);
-        else if (stat == _moveSpeedStat)
-            _manager.CmdUpgradeStat((int)StatType.MoveSpeed);
-    }
-
-    private void SetUpgradableStats(bool active)
-    {
-        _damageStat.SetUpgradable(active);
-        _armorStat.SetUpgradable(active);
-        _moveSpeedStat.SetUpgradable(active);
-
-    }
-
     private void CheckManagerChanges()
     {
+        // stat changes
         if (_curDamage != _manager.Damage)
         {
             _curDamage = _manager.Damage;
@@ -109,8 +89,35 @@ public class StatsUI : MonoBehaviour
         {
             _curStatPoints = _manager.StatPoints;
             _statPointsText.text = _curStatPoints.ToString();
-            if (_curStatPoints > 0) SetUpgradableStats(true);
-            else SetUpgradableStats(false);
+            if (_curStatPoints > 0)
+            {
+                SetUpgradableStats(true);
+            }
+            else
+            {
+                SetUpgradableStats(false);
+            }
+        }
+    }
+    private void SetUpgradableStats(bool active)
+    {
+        _damageStat.SetUpgradable(active);
+        _armorStat.SetUpgradable(active);
+        _moveSpeedStat.SetUpgradable(active);
+    }
+    public void UpgradeStat(StatItem stat)
+    {
+        if (stat == _damageStat)
+        {
+            _manager.CmdUpgradeStat((int)StatType.Damage);
+        }
+        else if (stat == _armorStat)
+        {
+            _manager.CmdUpgradeStat((int)StatType.Armor);
+        }
+        else if (stat == _moveSpeedStat)
+        {
+            _manager.CmdUpgradeStat((int)StatType.MoveSpeed);
         }
     }
 }

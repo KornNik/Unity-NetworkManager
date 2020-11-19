@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -12,11 +13,13 @@ public class UserData
     public Vector3 SpawnPosition;
     public List<int> Inventory = new List<int>();
     public List<int> Equipment = new List<int>();
+    public List<int> Skills = new List<int>();
 
     public int Level;
     public int StatPoints;
     public float Exp;
     public float NextLevelExp;
+    public int SkillPoints;
 
     public int CurHealth;
     public int StatDamage;

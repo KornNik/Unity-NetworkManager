@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: New Item
   m_EditorClassIdentifier: 
   name: SwordOne
-  Icon: {fileID: 21300022, guid: 9d68f69951e79f044a61598c94bbaee8, type: 3}
-  PickupPrefab: {fileID: 5916007930539642833, guid: 960927881eed01040920eb3806abfc35,
+  icon: {fileID: 21300018, guid: 9d68f69951e79f044a61598c94bbaee8, type: 3}
+  pickUpPrefab: {fileID: 5916007930539642833, guid: 960927881eed01040920eb3806abfc35,
     type: 3}

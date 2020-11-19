@@ -3,19 +3,13 @@ using UnityEngine.Networking;
 
 public class PlayerLoader : NetworkBehaviour
 {
-    [SerializeField] private PlayerController _controller;
     [SerializeField] private Player _player;
-
-    public override void OnStartAuthority()
-    {
-        CmdCreatePlayer();
-    }
+    [SerializeField] private PlayerController _controller;
 
     public Character CreateCharacter()
     {
         UserAccount acc = AccountManager.GetAccount(connectionToClient);
-        GameObject unitPrefab = NetworkManager.singleton.spawnPrefabs.Find
-            (x => x.GetComponent<NetworkIdentity>().assetId.Equals(acc.Data.CharacterHash));
+        GameObject unitPrefab = NetworkManager.singleton.spawnPrefabs.Find(x => x.GetComponent<NetworkIdentity>().assetId.Equals(acc.Data.CharacterHash));
         GameObject unit;
         Character tempCharacter;
         if (acc.Data.JustCreated)
@@ -36,22 +30,11 @@ public class PlayerLoader : NetworkBehaviour
         TargetLinkCharacter(connectionToClient, unit.GetComponent<NetworkIdentity>());
         return tempCharacter;
     }
-    public override bool OnCheckObserver(NetworkConnection connection)
-    {
-        return false;
-    }
 
-    private void OnDestroy()
+    public override void OnStartAuthority()
     {
-        if (isServer && _player.Character != null)
-        {
-            UserAccount acc = AccountManager.GetAccount(connectionToClient);
-            acc.Data.PosCharacter = _player.Character.transform.position;
-            Destroy(_player.Character.gameObject);
-            NetworkManager.singleton.StartCoroutine(acc.Quit());
-        }
+        CmdCreatePlayer();  
     }
-
     [Command]
     public void CmdCreatePlayer()
     {
@@ -66,5 +49,20 @@ public class PlayerLoader : NetworkBehaviour
         Character character = unit.GetComponent<Character>();
         _player.Setup(character, GetComponent<Inventory>(), GetComponent<Equipment>(), true);
         _controller.SetCharacter(character, true);
+    }
+    public override bool OnCheckObserver(NetworkConnection connection)
+    {
+        return false;
+    }
+
+    private void OnDestroy()
+    {
+        if (isServer && _player.Character != null)
+        {
+            UserAccount acc = AccountManager.GetAccount(connectionToClient);
+            acc.Data.PosCharacter = _player.Character.transform.position;
+            Destroy(_player.Character.gameObject);
+            NetworkManager.singleton.StartCoroutine(acc.Quit());
+        }
     }
 }

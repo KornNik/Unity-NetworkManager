@@ -3,31 +3,33 @@ using UnityEngine.Networking;
 
 public class Interactable : NetworkBehaviour
 {
-    [SerializeField] private float _radius = 2f;
-
-    public Transform InterectionTransform;
-
+    public Transform InteractionTransform;
+    [SerializeField] float _radius = 2f;
     private bool _hasInteract = true;
-
     public bool HasInteract
-    { get { return _hasInteract; } set { _hasInteract = value; } }
-
-
-    public virtual float GetInteractDistance(GameObject user)
     {
-        return _radius;
+        get 
+        { 
+            return _hasInteract; 
+        }
+        set 
+        { 
+            _hasInteract = value; 
+        }
     }
 
     public virtual bool Interact(GameObject user)
     {
         return false;
     }
+    public virtual float GetInteractDistance(GameObject user)
+    {
+        return _radius;
+    }
 
     protected virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(InterectionTransform.position, _radius);
+        Gizmos.DrawWireSphere(InteractionTransform.position, _radius);
     }
-
 }
-

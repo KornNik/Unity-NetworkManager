@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: New equipment
   m_EditorClassIdentifier: 
   name: SwordTwo
-  Icon: {fileID: 21300018, guid: 9d68f69951e79f044a61598c94bbaee8, type: 3}
-  PickupPrefab: {fileID: 4283103946912607484, guid: 597b532a3f007de419dc3d38a65d259d,
+  icon: {fileID: 21300022, guid: 9d68f69951e79f044a61598c94bbaee8, type: 3}
+  pickUpPrefab: {fileID: 4283103946912607484, guid: 597b532a3f007de419dc3d38a65d259d,
     type: 3}
-  EquipSlot: 3
-  DamageModifier: 2
-  ArmorModifier: 3
-  SpeedModifier: 4
+  equipSlot: 3
+  damageModifier: 2
+  armorModifier: 2
+  speedModifier: 4

@@ -83,8 +83,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81491ae1dc5f9fa42bd79a04b32112fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controller: {fileID: 114508426267049138}
   _player: {fileID: 114965805938972782}
+  _controller: {fileID: 114508426267049138}
 --- !u!114 &114508426267049138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,10 +94,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1608939152482308057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c521c3cd23a37fe479106df028dc27e0, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a7972d01f73ee04abe06862193fd5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementMask:
+  _movementMask:
     serializedVersion: 2
     m_Bits: 512
 --- !u!114 &114010791629636174
@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e62c50af617aef64ead7506fe5096b3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Space: 8
   Player: {fileID: 0}
+  Space: 8
 --- !u!114 &114974380670558524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,8 +142,8 @@ MonoBehaviour:
   _character: {fileID: 0}
   _inventory: {fileID: 0}
   _equipment: {fileID: 0}
-  _statsManager: {fileID: 0}
   _progress: {fileID: 0}
+  _statsManager: {fileID: 0}
 --- !u!114 &114265489254380178
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -39,7 +39,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916156316053211860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.130495, y: 2.4, z: 9.203064}
+  m_LocalPosition: {x: -17.130495, y: 2.612, z: 9.203064}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5406789216984244908}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 916156316053211860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e28bf87d2ab2974ea8b3b32bb87c006, type: 3}
+  m_Script: {fileID: 11500000, guid: 06017198846496545a8aeb7c5eca6706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3771675166611743393
@@ -109,23 +109,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 916156316053211860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a07007163c3f2cf4a847255aac7a9d89, type: 3}
+  m_Script: {fileID: 11500000, guid: 30c023f425f439c4f97d922177bec10a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 2
-  InterectionTransform: {fileID: 6750170525187467837}
-  _motor: {fileID: 5348160966614991514}
-  _unitStats: {fileID: 114707286428565854}
-  UnitSkills:
-    _skills: []
-  _moveRadius: 10
-  _minMoveDelay: 4
-  _maxMoveDelay: 12
-  _isAggressive: 1
-  _viewDistance: 5
-  _reviveDelay: 15
-  _rewardExp: 40
-  _agroDistance: 5
+  _maxHealth: 50
+  Damage:
+    _baseValue: 4
+  Armor:
+    _baseValue: 1
+  MoveSpeed:
+    _baseValue: 4
 --- !u!114 &1799501273890893387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,12 +128,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 916156316053211860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76ef25eec89a5a647bfe9459dafe4080, type: 3}
+  m_Script: {fileID: 11500000, guid: bf09f11b24b9e0e489ef4b69b164c402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 2627598010341651434}
-  _unit: {fileID: 3771675166611743393}
-  _combat: {fileID: 1746721912039246432}
+  InteractionTransform: {fileID: 6750170525187467837}
+  _radius: 2
+  _motor: {fileID: 5348160966614991514}
+  _stats: {fileID: 3771675166611743393}
+  UnitSkills:
+    _skills: []
+  _moveRadius: 10
+  _minMoveDelay: 4
+  _maxMoveDelay: 12
+  _aggressive: 1
+  _rewardExp: 50
+  _viewDistance: 8
+  _agroDistance: 5
+  _reviveDelay: 5
 --- !u!114 &1746721912039246432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,11 +154,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 916156316053211860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7680c555a91e17a4ea11e57b87055a75, type: 3}
+  m_Script: {fileID: 11500000, guid: 1924785d5dab42548b465ddd26e83e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackSpeed: 1
   AttackDistance: 0
+  _attackSpeed: 1
 --- !u!114 &114368014608748790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c37663056c7b54bb0094a86435c4f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _disableBihaviours:
+  _disableBehaviours:
   - {fileID: 1565175823047988306}
 --- !u!114 &114707286428565854
 MonoBehaviour:
@@ -178,16 +182,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 916156316053211860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6deed7ab51a5d7441a14207d48001c53, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c61ae709a6a00f4090f6bfed941df28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 50
-  Damage:
-    _baseValue: 5
-  Armor:
-    _baseValue: 0
-  MoveSpeed:
-    _baseValue: 4
+  _animator: {fileID: 2627598010341651434}
+  _unit: {fileID: 1799501273890893387}
+  _combat: {fileID: 1746721912039246432}
 --- !u!114 &114377180003684210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,14 +197,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 916156316053211860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54394302f7f719e4da279db344b2d988, type: 3}
+  m_Script: {fileID: 11500000, guid: 752d35856b5fc1649a10c28b1ea968af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _dropItems:
   - Item: {fileID: 11400000, guid: 9160b222aca1b3542ba127266370bd1b, type: 2}
-    Rate: 60.1
+    Rate: 48.9
   - Item: {fileID: 11400000, guid: e1526fbec8f89524e9c18ff434277147, type: 2}
-    Rate: 30.1
+    Rate: 83.9
 --- !u!114 &114007220205057224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,11 +337,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2627598010334216234}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5666fa1caa65785419318b4bd2e14e14, type: 3}
+  m_Script: {fileID: 11500000, guid: c090f06b487ce5144a1e2387b403de64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 2627598010341651434}
-  agent: {fileID: 4790090687912609258}
+  _animator: {fileID: 2627598010341651434}
+  _agent: {fileID: 4790090687912609258}
 --- !u!1 &7996238416852013550
 GameObject:
   m_ObjectHideFlags: 0
