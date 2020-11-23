@@ -65,6 +65,13 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CharacterSelect.cs" />
     <Compile Include="Assets\Scripts\CharacterSelectUI.cs" />
+    <Compile Include="Assets\Scripts\Chat\ChatChannel.cs" />
+    <Compile Include="Assets\Scripts\Chat\ChatMessageUI.cs" />
+    <Compile Include="Assets\Scripts\Chat\ChatUI.cs" />
+    <Compile Include="Assets\Scripts\Chat\GlobalChatChannel.cs" />
+    <Compile Include="Assets\Scripts\Chat\LocalChatChannel.cs" />
+    <Compile Include="Assets\Scripts\Chat\PlayerChat.cs" />
+    <Compile Include="Assets\Scripts\Chat\PrivateChatChannel.cs" />
     <Compile Include="Assets\Scripts\Controllers\AccountManager.cs" />
     <Compile Include="Assets\Scripts\Controllers\CameraController.cs" />
     <Compile Include="Assets\Scripts\Controllers\MyNetworkManager.cs" />
@@ -117,6 +124,7 @@
     <Compile Include="Assets\Scripts\Stats\StatItem.cs" />
     <Compile Include="Assets\Scripts\Stats\StatsManager.cs" />
     <Compile Include="Assets\Scripts\Stats\StatsUI.cs" />
+    <Compile Include="Assets\Scripts\Structs\ChatMessage.cs" />
     <Compile Include="Assets\Scripts\Structs\DropItem.cs" />
     <Compile Include="Assets\Scripts\Units\Character.cs" />
     <Compile Include="Assets\Scripts\Units\Combat.cs" />
